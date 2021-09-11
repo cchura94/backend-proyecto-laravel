@@ -1,0 +1,5 @@
+1. Descargar e Instalar GIT en su sistema
+
+2. Iniciar un nuevo repositorio de git (en el Proyecto de Laravel)
+
+> git init
