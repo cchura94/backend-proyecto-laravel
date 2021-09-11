@@ -1,0 +1,13 @@
+php artisan make:model Categoria -m
+php artisan make:model Producto -m
+
+php artisan make:model Sucursal -m
+php artisan make:model Persona -a
+
+php artisan make:migration create_producto_sucursal_table
+
+-----------------------------------
+php artisan make:controller CategoriaController --api
+php artisan make:controller ProductoController --api
+php artisan make:controller SucursalController --api
+php artisan make:controller UsuarioController --api

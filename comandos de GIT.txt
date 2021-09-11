@@ -3,3 +3,21 @@
 2. Iniciar un nuevo repositorio de git (en el Proyecto de Laravel)
 
 > git init
+
+3. 
+> git add .
+
+4. Registrar un cambio
+
+> git commit -m "090921 - Auth JWT"
+
+5. Subir a un repositorio remoto (Github, Gitlab, Bitbucket)
+- Crear un repositorio
+
+6. Relacionar el repositorio remoto(GITHUB) con el repositorio local(sistema)
+
+> git remote add origin https://github.com/cchura94/backend-proyecto-laravel.git
+
+7. Subir los cambios del repositorio local al repositorio remoto (github)
+
+> git push origin master
