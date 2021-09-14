@@ -5,3 +5,13 @@ Content-Type: application/json
     "email": "cristian@gmail.com",
     "password": "cristian12345"
 }
+
+###
+PUT http://127.0.0.1:8000/api/usuario/1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Cristian prueba",
+    "email": "cristian@gmail.com"
+}

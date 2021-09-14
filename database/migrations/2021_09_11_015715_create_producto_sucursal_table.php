@@ -15,6 +15,14 @@ class CreateProductoSucursalTable extends Migration
     {
         Schema::create('producto_sucursal', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("producto_id")->unsigned();
+            $table->bigInteger("sucursal_id")->unsigned();
+            $table->integer("stock")->default(0);
+
+            // N:M
+            $table->foreign("producto_id")->references("id")->on("productos");
+            $table->foreign("sucursal_id")->references("id")->on("sucursals");
+            
             $table->timestamps();
         });
     }
