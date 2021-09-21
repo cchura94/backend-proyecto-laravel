@@ -2,8 +2,8 @@ POST http://127.0.0.1:8000/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "cristian@gmail.com",
-    "password": "cristian12345"
+    "email": "pablo@gmail.com",
+    "password": "pablo12345"
 }
 
 ###
@@ -14,4 +14,47 @@ Accept: application/json
 {
     "name": "Cristian prueba",
     "email": "cristian@gmail.com"
+}
+
+### API REST Categorias
+
+GET http://127.0.0.1:8000/api/categoria
+
+### Guardar Categoria
+
+POST http://127.0.0.1:8000/api/categoria
+Content-Type: application/json
+Accept: application/json
+
+{
+    "nombre": "ELECTRONICOS",
+    "detalle": "Para TODOS"
+}
+
+### Mostrar una categoria
+GET http://127.0.0.1:8000/api/categoria/1
+
+### Modificar una categoria
+PUT http://127.0.0.1:8000/api/categoria/1
+Content-Type: application/json
+
+{
+  "nombre": "ROPA PARA NIÑOS",
+  "detalle": "Ropa"
+}
+
+### Eliminar una categoria
+
+DELETE http://127.0.0.1:8000/api/categoria/1
+
+
+// Nuevo Usuario
+###
+POST http://127.0.0.1:8000/api/usuario
+Content-Type: application/json
+
+{
+    "name": "pablo",
+    "email": "pablo@gmail.com",
+    "password": "pablo12345"
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Sucursal;
 
 class SucursalController extends Controller
 {
@@ -13,7 +14,9 @@ class SucursalController extends Controller
      */
     public function index()
     {
-        //
+        $lista_sucursales = Sucursal::all();
+
+        return response()->json($lista_sucursales, 200);
     }
 
     /**
@@ -24,7 +27,24 @@ class SucursalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validar
+        $request->validate([
+            "nombre" => "required|max:200",
+            "direccion" => "required|max:200",
+            "telefono" => "required|max:15",
+            "user_id" => "required"
+        ]);
+
+        // guardar
+        $sucursal = new Sucursal;
+        $sucursal->nombre = $request->nombre;
+        $sucursal->direccion = $request->direccion;
+        $sucursal->telefono = $request->telefono;
+        $sucursal->user_id = $request->user_id;
+        $sucursal->save();
+
+        return response()->json(["mensaje" => "Sucursal Registrado"], 201);
+
     }
 
     /**
@@ -35,7 +55,8 @@ class SucursalController extends Controller
      */
     public function show($id)
     {
-        //
+        $sucursal = Sucursal::find($id);
+        return response()->json($sucursal, 200);
     }
 
     /**
@@ -47,7 +68,25 @@ class SucursalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        // validar
+        $request->validate([
+            "nombre" => "required|max:200",
+            "direccion" => "required|max:200",
+            "telefono" => "required|max:15",
+            "user_id" => "required"
+        ]);
+
+        // guardar
+        $sucursal = Sucursal::find($id);
+        $sucursal->nombre = $request->nombre;
+        $sucursal->direccion = $request->direccion;
+        $sucursal->telefono = $request->telefono;
+        $sucursal->user_id = $request->user_id;
+        $sucursal->save();
+
+        return response()->json(["mensaje" => "Sucursal Modificado"], 200);
+
     }
 
     /**
@@ -58,6 +97,9 @@ class SucursalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sucursal = Sucursal::find($id);
+        $sucursal->delete();
+        return response()->json(["mensaje" => "Sucursal Eliminado"], 200);
+
     }
 }

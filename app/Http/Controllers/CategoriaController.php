@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Categoria;
 
 class CategoriaController extends Controller
 {
@@ -13,7 +14,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $lista_categorias = Categoria::all();
+        return response()->json($lista_categorias, 200);
     }
 
     /**
@@ -24,7 +26,18 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validar la categoria
+        $request->validate([
+            "nombre" => "required|string|max:30|min:2|unique:categorias",
+            "detalle" => "string"
+        ]);
+        // guardar guardar
+        $categoria = new categoria;
+        $categoria->nombre = $request->nombre;
+        $categoria->detalle = $request->detalle;
+        $categoria->save();
+        // enviar un mensaje 
+        return response()->json(["mensaje" => "Categoria Registrada"], 201);
     }
 
     /**
@@ -35,7 +48,8 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        return response()->json($categoria, 200);
     }
 
     /**
@@ -47,7 +61,19 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validar
+        $request->validate([
+            "nombre" => "required|string|max:30|min:2|unique:categorias,nombre,".$id,
+            "detalle" => "string"
+        ]);
+        //modificar
+        $categoria = Categoria::find($id);
+        $categoria->nombre = $request->nombre;
+        $categoria->detalle = $request->detalle;
+        $categoria->save();
+        // enviar un mensaje 
+        return response()->json(["mensaje" => "Categoria Modificada"], 200);
+    
     }
 
     /**
@@ -58,6 +84,8 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria = Categoria::find($id);
+        $categoria->delete();
+        return response()->json(["mensaje" => "Categoria Eliminada"], 200);
     }
 }
