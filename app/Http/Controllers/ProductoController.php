@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Producto;
 
 class ProductoController extends Controller
 {
@@ -11,9 +12,17 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // select * from productos
+        if($request->limit){
+            $limit = $request->limit;            
+            $lista_productos = Producto::paginate($limit);
+            return response()->json($lista_productos, 200);
+        }
+
+        $lista_productos = Producto::get();
+        return response()->json($lista_productos, 200);
     }
 
     /**
@@ -24,7 +33,35 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validar
+        $request->validate([
+            "nombre" => "required|min:3|max:200|string",
+            "categoria_id" => "required",
+            'imagen' => 'nullable|max:2000|mimes:jpeg,png', 
+        ]);
+
+        // subir la imagen
+        $nombre_imagen= "";
+        if($file = $request->file("imagen")){
+                      
+            $nombre_imagen = time() . "-" . $file->getClientOriginalName();
+            $file->move("imagenes", $nombre_imagen);
+        }
+
+        // guardar datos
+        $prod = new Producto;
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->imagen = "/imagenes/$nombre_imagen";
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->save();
+
+        // responder
+        return response()->json([
+            "mensaje" => "Producto Registrado",
+            "producto" => $prod
+        ], 201);
     }
 
     /**
@@ -35,7 +72,8 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto = Producto::find($id);
+        return response()->json($producto, 200);
     }
 
     /**
@@ -47,7 +85,38 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         // validar
+         $request->validate([
+            "nombre" => "required|min:3|max:200|string",
+            "categoria_id" => "required",
+            'imagen' => 'nullable|max:2000|mimes:jpeg,png', 
+        ]);
+
+        
+
+        // guardar datos
+        $prod = Producto::find($id);
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+
+        // subir la imagen
+        $nombre_imagen= "";
+        if($file = $request->file("imagen")){
+                      
+            $nombre_imagen = time() . "-" . $file->getClientOriginalName();
+            $file->move("imagenes", $nombre_imagen);
+            $prod->imagen = "/imagenes/$nombre_imagen";
+        }
+        
+        $prod->descripcion = $request->descripcion;
+        $prod->categoria_id = $request->categoria_id;
+        $prod->save();
+
+        // responder
+        return response()->json([
+            "mensaje" => "Producto Modificado",
+            "producto" => $prod
+        ], 200);
     }
 
     /**
@@ -58,6 +127,12 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $prod = Producto::find($id);
+        $prod->delete();
+        // responder
+        return response()->json([
+            "mensaje" => "Producto Modificado",
+            "producto" => $prod
+        ], 200);
     }
 }
