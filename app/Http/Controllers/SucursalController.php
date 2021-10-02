@@ -16,6 +16,10 @@ class SucursalController extends Controller
     {
         $lista_sucursales = Sucursal::all();
 
+        foreach ($lista_sucursales as $sucursal) {
+            $sucursal->productos;
+        }
+
         return response()->json($lista_sucursales, 200);
     }
 

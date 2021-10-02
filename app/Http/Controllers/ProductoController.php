@@ -17,7 +17,14 @@ class ProductoController extends Controller
         // select * from productos
         if($request->limit){
             $limit = $request->limit;            
-            $lista_productos = Producto::paginate($limit);
+            /* $lista_productos = Producto::join("categorias", "productos.categoria_id", "categorias.id")
+                                        ->select("categorias.nombre as nombre_categoria", "productos.*")
+                                        ->paginate($limit);
+                                        */
+            $lista_productos = Producto::where("nombre", "like", "%".$request->q."%")->paginate($limit);
+            foreach ($lista_productos as $producto) {
+                $producto->categoria;
+            }
             return response()->json($lista_productos, 200);
         }
 
@@ -57,6 +64,7 @@ class ProductoController extends Controller
         $prod->categoria_id = $request->categoria_id;
         $prod->save();
 
+        $prod->categoria;
         // responder
         return response()->json([
             "mensaje" => "Producto Registrado",
