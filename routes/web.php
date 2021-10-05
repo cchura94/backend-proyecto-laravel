@@ -12,7 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\CursoController;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("/saludos", [CursoController::class, "prueba"]);
+
+// Route::resource("/curso", CursoController::class);
+// GET, POST, PUT, DELETE ||||  index, create, show, store, update, edit, destroy

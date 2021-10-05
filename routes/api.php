@@ -28,11 +28,16 @@ Route::group([
 
 });
 
-// Api resource
-Route::post("/producto/{id}/asignar_sucursal", [ProductoController::class, "asignar_sucursal"]);
 
-Route::apiResource("/usuario", UsuarioController::class);
-Route::apiResource("/categoria", CategoriaController::class);
-Route::apiResource("/sucursal", SucursalController::class);
-Route::apiResource("/producto", ProductoController::class);
-Route::apiResource("/personal", PersonaController::class);
+
+Route::group(['middleware' => 'auth:api'], function ($router) {
+
+    // Api resource
+    Route::post("/producto/{id}/asignar_sucursal", [ProductoController::class, "asignar_sucursal"]);
+
+    Route::apiResource("/usuario", UsuarioController::class);
+    Route::apiResource("/categoria", CategoriaController::class);
+    Route::apiResource("/sucursal", SucursalController::class);
+    Route::apiResource("/producto", ProductoController::class);
+    Route::apiResource("/personal", PersonaController::class);
+});

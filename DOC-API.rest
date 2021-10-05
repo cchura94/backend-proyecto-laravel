@@ -19,15 +19,16 @@ Accept: application/json
 ### API REST Categorias
 
 GET http://127.0.0.1:8000/api/categoria
-
+Accept: application/json
 ### Guardar Categoria
 
 POST http://127.0.0.1:8000/api/categoria
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer yJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYzMzM5NTQyOCwiZXhwIjoxNjMzMzk5MDI5LCJuYmYiOjE2MzMzOTU0MjksImp0aSI6IlFsSjZJSkFtY01KdTRObk0iLCJzdWIiOjMsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.jeNYUbfCAl1nemNaqyvmnSFfj6VqfCB492pibupsj4Y
 
 {
-    "nombre": "ELECTRONICOS",
+    "nombre": "a",
     "detalle": "Para TODOS"
 }
 
