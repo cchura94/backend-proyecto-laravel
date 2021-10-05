@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Sucursal;
 
 class ProductoController extends Controller
 {
@@ -142,5 +143,19 @@ class ProductoController extends Controller
             "mensaje" => "Producto Modificado",
             "producto" => $prod
         ], 200);
+    }
+
+    public function asignar_sucursal($id, Request $request)
+    {
+        $stock = $request->stock;
+        $sucursal_id = $request->sucursal_id;
+
+        $sucursal = Sucursal::find($sucursal_id);
+        $producto = Producto::find($id);
+        // asignar el producto a sucursal
+        
+        $sucursal->productos()->attach($producto->id, ['stock' => $stock]);
+
+        return response()->json(["mensaje" => "Producto asignado a Sucursal"], 201);
     }
 }

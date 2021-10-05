@@ -29,6 +29,8 @@ Route::group([
 });
 
 // Api resource
+Route::post("/producto/{id}/asignar_sucursal", [ProductoController::class, "asignar_sucursal"]);
+
 Route::apiResource("/usuario", UsuarioController::class);
 Route::apiResource("/categoria", CategoriaController::class);
 Route::apiResource("/sucursal", SucursalController::class);
